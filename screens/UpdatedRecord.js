@@ -24,13 +24,13 @@ const UpdatedRecord = () => {
   const onStartRecord = async () => {
     const path = Platform.select({
       ios: 'hello.m4a',
-      android: 'sdcard/shohan.mp3', // should give extra dir name in android. Won't grant permission to the first level of dir.
+      android: 'sdcard/Subtitles/record.mp3', // should give extra dir name in android. Won't grant permission to the first level of dir.
     });
     const result = await audioRecorderPlayer.startRecorder(path);
     await audioRecorderPlayer.startRecorder();
 
     audioRecorderPlayer.addRecordBackListener(e => {
-      console.log('Recording . . . ', e.currentPosition);
+      console.log('Recording . . . ', e);
       setStatus('recording');
       return;
     });
@@ -46,6 +46,7 @@ const UpdatedRecord = () => {
   };
 
   const onStartPlay = async () => {
+try {
     console.log('onStartPlay');
     const msg = await audioRecorderPlayer.startPlayer();
     console.log(msg);
@@ -53,7 +54,12 @@ const UpdatedRecord = () => {
       console.log(e);
       setStatus('Playing');
       return;
-    });
+    });  
+       
+} catch (error) {
+    console.log(error);
+}
+  
   };
 
   const onStopPlay = async () => {
@@ -63,7 +69,7 @@ const UpdatedRecord = () => {
   };
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>{status && status}</Text>
+      <Text>{status?status:'idle'}</Text>
       <TouchableOpacity
         onPress={onStartRecord}
         style={{backgroundColor: 'yellow', margin: 10, padding: 10}}>
