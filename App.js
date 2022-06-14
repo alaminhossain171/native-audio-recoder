@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import ClassRecord from './screens/ClassRecord'
+import UpdatedRecord from './screens/UpdatedRecord'
+// import ClassRecord from './screens/ClassRecord'
 
 const App = () => {
   return (
     <>
-    <ClassRecord />
+    {/* <ClassRecord /> */}
+    <UpdatedRecord />
     </>
   )
 }

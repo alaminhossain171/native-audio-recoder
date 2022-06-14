@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Text, View, Button, TouchableOpacity, Platform} from 'react-native';
 
 import AudioRecorderPlayer from 'react-native-audio-recorder-player';
+// const audioRecorderPlayer = new AudioRecorderPlayer();
 const audioRecorderPlayer = new AudioRecorderPlayer();
-
 export class ClassRecord extends Component {
   constructor(props) {
     super(props);
@@ -15,17 +15,22 @@ export class ClassRecord extends Component {
       currentDurationSec: 0,
       playTime: '00:00:00',
       duration: '00:00:00',
+      seconds: 10,
+      check: false,
     };
     this.audioRecorderPlayer = new AudioRecorderPlayer();
     this.audioRecorderPlayer.setSubscriptionDuration(0.09); // optional. Default is 0.1
   }
 
   onStartRecord = async () => {
-    // const path = '/data/user/0/com.recording/cache/sound.mp4';
+  
     const result = await this.audioRecorderPlayer.startRecorder();
     this.audioRecorderPlayer.addRecordBackListener(e => {
+      console.log(e.currentPosition)
       this.setState({
         recordSecs: e.currentPosition,
+     
+
         recordTime: this.audioRecorderPlayer.mmssss(
           Math.floor(e.currentPosition),
         ),
@@ -33,6 +38,7 @@ export class ClassRecord extends Component {
       return;
     });
     console.log('uri is:', result);
+    setTimeout(this.onStopRecord,5000)
   };
 
   //========== main onRecord function========//
